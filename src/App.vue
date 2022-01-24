@@ -1,24 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Hero from './components/Hero.vue'
 import MainLayout from './components/MainLayout.vue'
-import ContentWrapper from './components/ContentWrapper.vue'
 </script>
 
 <template>
   <MainLayout>
     <header>
-      <Hero heading="You did it!" />
-
       <nav>
-        <!-- <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink> -->
+        <RouterLink to="/">All todos</RouterLink>
       </nav>
     </header>
 
-    <ContentWrapper>
-      <RouterView />
-    </ContentWrapper>
+    <RouterView />
   </MainLayout>
 </template>
 
