@@ -15,4 +15,8 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', { singleQuote: true, semi: false }],
   },
+  globals: {
+    window: true,
+    module: true,
+  },
 }
