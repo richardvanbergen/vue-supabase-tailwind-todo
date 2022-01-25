@@ -18,5 +18,6 @@ module.exports = {
   globals: {
     window: true,
     module: true,
+    require: true,
   },
 }
