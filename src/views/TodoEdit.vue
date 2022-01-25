@@ -6,36 +6,40 @@ import TodoItemEditForm from '@/components/todos/TodoItemEditForm.vue'
 import { Todo, useTodosStore } from '@/stores/todo'
 // @ts-expect-error missing types
 import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
-import router from '@/router'
-</script>
+// @ts-expect-error missing types
+import { notify } from 'notiwind'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      loading: false,
-      error: '',
-    }
-  },
-  methods: {
-    async createNewTodoItem(data: Todo) {
-      this.loading = true
-      const todosStore = useTodosStore()
-      const response = await todosStore.createTodo(data.title, data.description)
+const loading = ref(false)
+const error = ref('')
+const router = useRouter()
 
-      if (response.error) {
-        this.error = `${response.error.code}: ${response.error.message}`
-      }
+async function createNewTodoItem(data: Todo) {
+  loading.value = true
+  const todosStore = useTodosStore()
+  const response = await todosStore.createTodo(data.title, data.description)
 
-      this.loading = false
-      router.push('/')
-    },
-  },
+  if (response.error) {
+    error.value = `${response.error.code}: ${response.error.message}`
+  }
+
+  loading.value = false
+
+  notify({
+    group: 'success',
+    title: 'Created',
+    text: 'New todo item created',
+  })
+
+  router.push({
+    name: 'todo-list',
+  })
 }
 </script>
 
 <template>
-  <article class="flex flex-col w-screen max-w-4xl gap-8 m-auto">
+  <article class="flex flex-col w-[100%] md:w-[80%] max-w-4xl gap-8 m-auto">
     <div class="flex items-center justify-between">
       <Hero heading="🚀 Create New" />
     </div>
