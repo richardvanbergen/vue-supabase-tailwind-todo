@@ -6,6 +6,8 @@ import TodoList from '@/components/todos/TodoList.vue'
 import { useTodosStore } from '@/stores/todo'
 import ErrorNotification from '@/components/ErrorNotification.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+// @ts-expect-error missing types for this lib
+import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
 </script>
 
 <script lang="ts">
@@ -61,6 +63,8 @@ export default {
             Retry
           </button>
         </ErrorNotification>
+
+        <PacmanLoader v-if="loading" />
 
         <TodoListItem :key="index" v-for="(item, index) in items">
           <template #title>

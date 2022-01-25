@@ -13,7 +13,8 @@
     "@supabase/supabase-js": "^1.29.3",
     "pinia": "^2.0.9",
     "vue": "^3.2.27",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue-spinner": "^1.0.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
