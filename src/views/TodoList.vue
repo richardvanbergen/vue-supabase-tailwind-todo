@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
-import ContentWrapper from '@/components/ContentWrapper.vue'
+import FloatingContentBox from '@/components/FloatingContentBox.vue'
 import TodoListItem from '@/components/todos/TodoListItem.vue'
 import TodoList from '@/components/todos/TodoList.vue'
 import { useTodosStore } from '@/stores/todo'
 import ErrorNotification from '@/components/ErrorNotification.vue'
+import ButtonPrimary from '@/components/ButtonPrimary.vue'
 </script>
 
 <script lang="ts">
@@ -42,29 +43,35 @@ export default {
 </script>
 
 <template>
-  <Hero heading="You did it!" />
+  <article class="flex flex-col w-screen max-w-4xl gap-8 m-auto">
+    <div class="flex items-center justify-between">
+      <Hero heading="🚀 Todos" />
 
-  <ContentWrapper>
-    <TodoList>
-      <ErrorNotification v-if="error">
-        {{ error }}
-        <button
-          class="bg-red-700 text-white py-1 px-4 rounded-sm"
-          v-on:click.prevent="fetchList"
-        >
-          Retry
-        </button>
-      </ErrorNotification>
+      <ButtonPrimary>Add New</ButtonPrimary>
+    </div>
 
-      <TodoListItem :key="index" v-for="(item, index) in items">
-        <template #title>
-          {{ item.title }}
-        </template>
+    <FloatingContentBox>
+      <TodoList>
+        <ErrorNotification v-if="error">
+          {{ error }}
+          <button
+            class="px-4 py-1 text-white bg-red-700 rounded-sm"
+            v-on:click.prevent="fetchList"
+          >
+            Retry
+          </button>
+        </ErrorNotification>
 
-        <template #description>
-          {{ item.description }}
-        </template>
-      </TodoListItem>
-    </TodoList>
-  </ContentWrapper>
+        <TodoListItem :key="index" v-for="(item, index) in items">
+          <template #title>
+            {{ item.title }}
+          </template>
+
+          <template #description>
+            {{ item.description }}
+          </template>
+        </TodoListItem>
+      </TodoList>
+    </FloatingContentBox>
+  </article>
 </template>
