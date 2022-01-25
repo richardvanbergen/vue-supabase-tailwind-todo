@@ -45,7 +45,7 @@ export default {
 </script>
 
 <template>
-  <article class="flex flex-col w-[80%] md:w-[60%] max-w-4xl gap-8 m-auto">
+  <article class="flex flex-col w-[100%] md:w-[80%] max-w-4xl gap-8 m-auto">
     <div class="flex items-center justify-between">
       <Hero heading="🚀 Todos" />
 
