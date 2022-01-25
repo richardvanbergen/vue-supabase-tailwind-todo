@@ -10,7 +10,7 @@ const router = createRouter({
       component: TodoList,
     },
     {
-      path: '/todo/:id',
+      path: '/todo/:id?',
       name: 'todo-item',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
