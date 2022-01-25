@@ -16,7 +16,7 @@ body {
   @apply font-sans font-normal leading-normal text-gray-800 text-base md:text-lg md:leading-relaxed;
 }
 
-a {
+.link {
   @apply text-blue-400 hover:text-blue-700 visited:text-blue-900 underline underline-offset-2;
 }
 

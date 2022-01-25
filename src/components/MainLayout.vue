@@ -10,17 +10,11 @@ import { RouterLink } from 'vue-router'
     </template>
 
     <template #links>
-      <RouterLink to="/">All todos</RouterLink>
+      <RouterLink to="/" class="link">All todos</RouterLink>
     </template>
   </MainHeader>
 
-  <section class="grid min-h-screen grid-cols-1 gap-4 p-8 place-content-center">
+  <section class="grid grid-cols-1 gap-4 px-8 py-12 place-content-center">
     <slot></slot>
   </section>
 </template>
-
-<style scoped>
-article:empty {
-  display: none;
-}
-</style>

@@ -63,6 +63,11 @@ export default defineComponent({
       }}</span>
     </div>
 
-    <button type="submit" class="text-white bg-green-500">Submit</button>
+    <button
+      type="submit"
+      class="px-5 mt-8 place-self-center py-2.5 transition-all overflow-hidden font-medium text-xl rounded-lg bg-green-600 hover:bg-green-800 text-white"
+    >
+      Submit
+    </button>
   </form>
 </template>

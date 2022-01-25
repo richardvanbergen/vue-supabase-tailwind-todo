@@ -13,7 +13,10 @@ export const useTodosStore = defineStore('todos', {
   }),
   actions: {
     async fetchActiveTodos(): Promise<PostgrestResponse<Todo>> {
-      const response = await supabase.from('todos').select().order('created_at')
+      const response = await supabase
+        .from('todos')
+        .select()
+        .order('created_at', { ascending: false })
       if (response.data) {
         this.todos = response.data
       }
