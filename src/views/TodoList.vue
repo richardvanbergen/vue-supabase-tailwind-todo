@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
 import FloatingContentBox from '@/components/FloatingContentBox.vue'
-import TodoListItem from '@/components/todos/TodoListItem.vue'
+import TodoItemPreview from '@/components/todos/TodoItemPreview.vue'
 import TodoList from '@/components/todos/TodoList.vue'
 import { useTodosStore } from '@/stores/todo'
 import ErrorNotification from '@/components/ErrorNotification.vue'
@@ -49,7 +49,7 @@ export default {
     <div class="flex items-center justify-between">
       <Hero heading="🚀 Todos" />
 
-      <ButtonPrimary>Add New</ButtonPrimary>
+      <ButtonPrimary to="/todo">Add New</ButtonPrimary>
     </div>
 
     <FloatingContentBox>
@@ -66,7 +66,7 @@ export default {
 
         <PacmanLoader v-if="loading" />
 
-        <TodoListItem :key="index" v-for="(item, index) in items">
+        <TodoItemPreview :key="index" v-for="(item, index) in items">
           <template #title>
             {{ item.title }}
           </template>
@@ -74,7 +74,7 @@ export default {
           <template #description>
             {{ item.description }}
           </template>
-        </TodoListItem>
+        </TodoItemPreview>
       </TodoList>
     </FloatingContentBox>
   </article>
