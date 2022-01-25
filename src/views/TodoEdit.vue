@@ -3,7 +3,10 @@ import Hero from '@/components/Hero.vue'
 import FloatingContentBox from '@/components/FloatingContentBox.vue'
 import ErrorNotification from '@/components/ErrorNotification.vue'
 import TodoItemEditForm from '@/components/todos/TodoItemEditForm.vue'
-import { useTodosStore } from '@/stores/todo'
+import { Todo, useTodosStore } from '@/stores/todo'
+// @ts-expect-error missing types
+import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
+import router from '@/router'
 </script>
 
 <script lang="ts">
@@ -15,25 +18,17 @@ export default {
     }
   },
   methods: {
-    async createNewTodoItem(data: FormData) {
+    async createNewTodoItem(data: Todo) {
       this.loading = true
       const todosStore = useTodosStore()
-      try {
-        const response = await todosStore.createTodo(
-          data.get('title'),
-          data.get('description')
-        )
-        if (response.status === 200 || response.status === 201) {
-          this.items = todosStore.todos
-        } else {
-          this.error = `${response.status}: ${response.statusText}`
-        }
-      } catch (error) {
-        if (typeof error === 'string') {
-          this.error = error
-        }
+      const response = await todosStore.createTodo(data.title, data.description)
+
+      if (response.error) {
+        this.error = `${response.error.code}: ${response.error.message}`
       }
+
       this.loading = false
+      router.push('/')
     },
   },
 }
@@ -50,9 +45,8 @@ export default {
         {{ error }}
       </ErrorNotification>
 
-      <PulseLoader v-if="loading" />
-
-      <TodoItemEditForm submit-handler="" />
+      <PacmanLoader v-if="loading" />
+      <TodoItemEditForm v-else :submit-handler="createNewTodoItem" />
     </FloatingContentBox>
   </article>
 </template>

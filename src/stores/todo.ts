@@ -3,8 +3,8 @@ import { PostgrestResponse } from '@supabase/supabase-js'
 import { defineStore } from 'pinia'
 
 export type Todo = {
-  title: string | null
-  description: string | null
+  title: string
+  description: string
 }
 
 export const useTodosStore = defineStore('todos', {

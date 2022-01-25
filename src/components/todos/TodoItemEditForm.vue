@@ -25,8 +25,8 @@ export default defineComponent({
       const target = e.target as HTMLFormElement
       const formData = new FormData(target)
       const todo = {
-        title: formData.get('title')?.toString() ?? null,
-        description: formData.get('description')?.toString() ?? null,
+        title: formData.get('title')?.toString() ?? '',
+        description: formData.get('description')?.toString() ?? '',
       }
 
       const validationResult = await validateSchema(todoSchema, todo)
