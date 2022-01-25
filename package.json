@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^1.29.3",
     "@tailwindcss/forms": "^0.4.0",
+    "notiwind": "^1.2.5",
     "pinia": "^2.0.9",
     "vue": "^3.2.27",
     "vue-router": "^4.0.12",

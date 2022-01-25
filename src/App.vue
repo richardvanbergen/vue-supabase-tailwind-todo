@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import MainLayout from './components/MainLayout.vue'
+import ToastNotification from './components/ToastNotification.vue'
 </script>
 
 <template>
   <MainLayout>
     <RouterView />
   </MainLayout>
+
+  <ToastNotification notification-type="success" />
+  <ToastNotification notification-type="error" />
 </template>
 
 <style>
