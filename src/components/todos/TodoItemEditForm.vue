@@ -1,45 +1,39 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import todoSchema from '@/data/validation/todo-schema'
+import {
+  validateSchema,
+  ValidationPathErrorMap,
+} from '@/data/validation/validate'
+import { Todo } from '@/stores/todo'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
+  props: {
+    submitHandler: {
+      type: Function as PropType<(data: Todo) => Promise<void>>,
+      required: true,
+    },
+  },
   data() {
     return {
-      errors: {
-        title: null,
-        description: null,
-      } as { title: string | null; description: string | null },
-      title: null,
-      description: null,
+      errors: {} as ValidationPathErrorMap,
     }
   },
   methods: {
-    checkForm(e: Event) {
+    async checkForm(e: Event) {
       e.preventDefault()
-      let formIsValid = true
-      if (e.target) {
-        const formData = new FormData(<HTMLFormElement>e.target)
+      const target = e.target as HTMLFormElement
+      const formData = new FormData(target)
+      const todo = {
+        title: formData.get('title')?.toString() ?? null,
+        description: formData.get('description')?.toString() ?? null,
+      }
 
-        const title = formData.get('title')
-        const description = formData.get('description')
-
-        this.errors = {
-          title: null,
-          description: null
-        }
-
-        if (!title) {
-          formIsValid = false
-          this.errors.title = 'Please enter a title.'
-        }
-
-        if (!description) {
-          formIsValid = false
-          this.errors.description = 'Please enter a description.'
-        }
-
-        if (formIsValid) {
-          // execute
-        }
+      const validationResult = await validateSchema(todoSchema, todo)
+      if (validationResult === true) {
+        this.submitHandler(todo)
+      } else {
+        this.errors = validationResult
       }
     },
   },
@@ -51,7 +45,9 @@ export default defineComponent({
     <div>
       <label for="title">Task Title</label>
       <input type="text" name="title" id="title" class="w-full mt-2" />
-      <span v-if="errors.title">{{ errors.title }}</span>
+      <span v-if="errors.title" class="text-red-500">{{
+        errors.title.message
+      }}</span>
     </div>
     <div>
       <label for="description">Description</label>
@@ -62,7 +58,9 @@ export default defineComponent({
         cols="30"
         rows="10"
       ></textarea>
-      <span v-if="errors.description">{{ errors.description }}</span>
+      <span v-if="errors.description" class="text-red-500">{{
+        errors.description.message
+      }}</span>
     </div>
 
     <button type="submit" class="text-white bg-green-500">Submit</button>

@@ -3,6 +3,7 @@ import Hero from '@/components/Hero.vue'
 import FloatingContentBox from '@/components/FloatingContentBox.vue'
 import ErrorNotification from '@/components/ErrorNotification.vue'
 import TodoItemEditForm from '@/components/todos/TodoItemEditForm.vue'
+import { useTodosStore } from '@/stores/todo'
 </script>
 
 <script lang="ts">
@@ -13,7 +14,28 @@ export default {
       error: '',
     }
   },
-  methods: {},
+  methods: {
+    async createNewTodoItem(data: FormData) {
+      this.loading = true
+      const todosStore = useTodosStore()
+      try {
+        const response = await todosStore.createTodo(
+          data.get('title'),
+          data.get('description')
+        )
+        if (response.status === 200 || response.status === 201) {
+          this.items = todosStore.todos
+        } else {
+          this.error = `${response.status}: ${response.statusText}`
+        }
+      } catch (error) {
+        if (typeof error === 'string') {
+          this.error = error
+        }
+      }
+      this.loading = false
+    },
+  },
 }
 </script>
 
@@ -30,7 +52,7 @@ export default {
 
       <PulseLoader v-if="loading" />
 
-      <TodoItemEditForm />
+      <TodoItemEditForm submit-handler="" />
     </FloatingContentBox>
   </article>
 </template>

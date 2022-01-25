@@ -15,7 +15,8 @@
     "pinia": "^2.0.9",
     "vue": "^3.2.27",
     "vue-router": "^4.0.12",
-    "vue-spinner": "^1.0.4"
+    "vue-spinner": "^1.0.4",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
