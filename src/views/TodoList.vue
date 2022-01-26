@@ -3,44 +3,29 @@ import Hero from '@/components/Hero.vue'
 import FloatingContentBox from '@/components/FloatingContentBox.vue'
 import TodoItemPreview from '@/components/todos/TodoItemPreview.vue'
 import TodoList from '@/components/todos/TodoList.vue'
-import { useTodosStore } from '@/stores/todo'
+import { Todo, useTodosStore } from '@/stores/todo'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 // @ts-expect-error missing types for this lib
 import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
-</script>
+import { onBeforeUnmount, ref } from 'vue'
+import { supabase } from '@/data/supabase'
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      loading: false,
-      error: '',
-      items: [] as { title: string; description: string }[],
-    }
-  },
-  async created() {
-    await this.fetchList()
-  },
-  methods: {
-    async fetchList() {
-      this.loading = true
-      const todosStore = useTodosStore()
-      try {
-        const response = await todosStore.fetchActiveTodos()
-        if (response.status === 200 || response.status === 201) {
-          this.items = todosStore.todos
-        } else {
-          this.error = `${response.status}: ${response.statusText}`
-        }
-      } catch (error) {
-        if (typeof error === 'string') {
-          this.error = error
-        }
-      }
-      this.loading = false
-    },
-  },
+const loading = ref(false)
+const todos = ref<Todo[]>([])
+const todosStore = useTodosStore()
+
+const fetchList = async () => {
+  loading.value = true
+  await todosStore.subscribeToActiveTodos()
+  todos.value = todosStore.todos
+  loading.value = false
 }
+
+fetchList()
+
+onBeforeUnmount(() => {
+  todosStore.unsubscribeFromActiveTodos()
+})
 </script>
 
 <template>
@@ -55,7 +40,7 @@ export default {
       <TodoList>
         <PacmanLoader v-if="loading" />
 
-        <TodoItemPreview :key="index" v-for="(item, index) in items">
+        <TodoItemPreview :key="index" v-for="(item, index) in todos">
           <template #title>
             {{ item.title }}
           </template>
