@@ -35,7 +35,9 @@ export const useTodosStore = defineStore('todos', {
       ])
 
       if (response.status === 201) {
-        this.todos = [{ title, description }, ...this.todos]
+        this.$patch((state) => {
+          state.todos.push({ title, description })
+        })
       }
 
       return response
