@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Hero from '@/components/Hero.vue'
 import FloatingContentBox from '@/components/FloatingContentBox.vue'
-import ErrorNotification from '@/components/ErrorNotification.vue'
 import TodoItemEditForm from '@/components/todos/TodoItemEditForm.vue'
 import { Todo, useTodosStore } from '@/stores/todo'
 // @ts-expect-error missing types
@@ -45,10 +44,6 @@ async function createNewTodoItem(data: Todo) {
     </div>
 
     <FloatingContentBox>
-      <ErrorNotification v-if="error">
-        {{ error }}
-      </ErrorNotification>
-
       <PacmanLoader v-if="loading" />
       <TodoItemEditForm v-else :submit-handler="createNewTodoItem" />
     </FloatingContentBox>

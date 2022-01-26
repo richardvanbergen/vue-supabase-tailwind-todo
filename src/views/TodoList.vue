@@ -4,7 +4,6 @@ import FloatingContentBox from '@/components/FloatingContentBox.vue'
 import TodoItemPreview from '@/components/todos/TodoItemPreview.vue'
 import TodoList from '@/components/todos/TodoList.vue'
 import { useTodosStore } from '@/stores/todo'
-import ErrorNotification from '@/components/ErrorNotification.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 // @ts-expect-error missing types for this lib
 import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue'
@@ -54,16 +53,6 @@ export default {
 
     <FloatingContentBox>
       <TodoList>
-        <ErrorNotification v-if="error">
-          {{ error }}
-          <button
-            class="px-4 py-1 text-white bg-red-700 rounded-sm"
-            v-on:click.prevent="fetchList"
-          >
-            Retry
-          </button>
-        </ErrorNotification>
-
         <PacmanLoader v-if="loading" />
 
         <TodoItemPreview :key="index" v-for="(item, index) in items">
