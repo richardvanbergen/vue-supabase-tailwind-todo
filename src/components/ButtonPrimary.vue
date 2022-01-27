@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import type { RouterLinkProps } from 'vue-router'
 defineProps<{
-  to: string
+  to: RouterLinkProps['to']
 }>()
 </script>
 

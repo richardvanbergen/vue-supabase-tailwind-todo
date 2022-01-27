@@ -1,21 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TodoList from '../views/TodoList.vue'
+import AppRoot from '../views/AppRoot.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'todo-list',
-      component: TodoList,
+      name: 'home',
+      component: AppRoot,
     },
     {
-      path: '/todo/:id?',
-      name: 'todo-item',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/TodoEdit.vue'),
+      path: '/todo',
+      component: () => import('../views/TodoPage.vue'),
+      children: [
+        {
+          path: '',
+          name: 'todo-list',
+          component: () => import('../views/TodoList.vue'),
+        },
+        {
+          path: 'create',
+          name: 'todo-item-create',
+          component: () => import('../views/TodoEdit.vue'),
+        },
+        {
+          path: ':id',
+          name: 'todo-item-edit',
+          component: () => import('../views/TodoEdit.vue'),
+        },
+      ],
     },
   ],
 })

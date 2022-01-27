@@ -6,11 +6,15 @@ import { RouterLink } from 'vue-router'
 <template>
   <MainHeader>
     <template #logo>
-      <span class="heading-lg">My Super App</span>
+      <RouterLink :to="{ name: 'home' }" class="heading-lg"
+        >My Super App</RouterLink
+      >
     </template>
 
     <template #links>
-      <RouterLink to="/" class="link">All todos</RouterLink>
+      <RouterLink :to="{ name: 'todo-list' }" class="link"
+        >All todos</RouterLink
+      >
     </template>
   </MainHeader>
 
