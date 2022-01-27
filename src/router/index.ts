@@ -11,22 +11,28 @@ const router = createRouter({
     },
     {
       path: '/todo',
-      component: () => import('../views/TodoPage.vue'),
+      component: () => import('../views/todo/TodoPage.vue'),
       children: [
         {
           path: '',
           name: 'todo-list',
-          component: () => import('../views/TodoList.vue'),
+          components: {
+            default: () => import('../views/todo/TodoList.vue'),
+            todoNavigation: () => import('../views/todo/TodoListNav.vue'),
+          },
         },
         {
           path: 'create',
           name: 'todo-item-create',
-          component: () => import('../views/TodoEdit.vue'),
+          components: {
+            default: () => import('../views/todo/TodoEdit.vue'),
+            todoNavigation: () => import('../views/todo/TodoEditNav.vue'),
+          },
         },
         {
           path: ':id',
           name: 'todo-item-edit',
-          component: () => import('../views/TodoEdit.vue'),
+          component: () => import('../views/todo/TodoEdit.vue'),
         },
       ],
     },
